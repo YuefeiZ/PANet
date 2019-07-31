@@ -5,6 +5,6 @@
 
 Mask RCNN：AP50: 93.3
 PANet_AFN：AP50 :94.875
-PANET:  AP50:97.6
+PANet:  AP50:97.6
 Mask RCNN的模型在mrcnn/model.py定义。PANet的模型在mrcnn/panetmodel.py中定义。
 
