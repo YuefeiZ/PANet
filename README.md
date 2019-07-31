@@ -4,7 +4,10 @@
 在相同的公路数据上做了测试，map为:
 
 Mask RCNN：AP50: 93.3
+
 PANet_AFN：AP50 :94.875
+
 PANet:  AP50:97.6
+
 Mask RCNN的模型在mrcnn/model.py定义。PANet的模型在mrcnn/panetmodel.py中定义。
 
