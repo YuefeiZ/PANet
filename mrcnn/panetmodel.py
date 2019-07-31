@@ -347,7 +347,7 @@ def log2_graph(x):
     return tf.log(x) / tf.log(2.0)
 
 
-class PyramidROIAlign1(KE.Layer):
+class PyramidROIAlign_AFN(KE.Layer):
     # 在各个不同的层级金字塔特征图上运行roi_pooling
     """Implements ROI Pooling on multiple levels of the feature pyramid.
 
@@ -1224,7 +1224,7 @@ def fpn_classifier_graph(rois, feature_maps, image_meta,
     """
     # ROI Pooling
     # Shape: [batch, num_rois, POOL_SIZE, POOL_SIZE, channels]
-    x2 = PyramidROIAlign1([pool_size, pool_size],2,
+    x2 = PyramidROIAlign_AFN([pool_size, pool_size],2,
                         name="roi_align_classifier_2")([rois, image_meta] + feature_maps)
 
     # Two 1024 FC layers (implemented with Conv2D for consistency)
@@ -1233,7 +1233,7 @@ def fpn_classifier_graph(rois, feature_maps, image_meta,
     x2 = KL.TimeDistributed(BatchNorm(), name='mrcnn_class_bn1_2')(x2, training=train_bn)
     x2 = KL.Activation('relu')(x2)
     #3
-    x3 = PyramidROIAlign1([pool_size, pool_size], 3,
+    x3 = PyramidROIAlign_AFN([pool_size, pool_size], 3,
                           name="roi_align_classifier_3")([rois, image_meta] + feature_maps)
 
     # Two 1024 FC layers (implemented with Conv2D for consistency)
@@ -1242,7 +1242,7 @@ def fpn_classifier_graph(rois, feature_maps, image_meta,
     x3 = KL.TimeDistributed(BatchNorm(), name='mrcnn_class_bn1_3')(x3, training=train_bn)
     x3 = KL.Activation('relu')(x3)
     #4
-    x4 = PyramidROIAlign1([pool_size, pool_size], 4,
+    x4 = PyramidROIAlign_AFN([pool_size, pool_size], 4,
                          name="roi_align_classifier_4")([rois, image_meta] + feature_maps)
 
     # Two 1024 FC layers (implemented with Conv2D for consistency)
@@ -1251,7 +1251,7 @@ def fpn_classifier_graph(rois, feature_maps, image_meta,
     x4 = KL.TimeDistributed(BatchNorm(), name='mrcnn_class_bn1_4')(x4, training=train_bn)
     x4 = KL.Activation('relu')(x4)
     #5
-    x5 = PyramidROIAlign1([pool_size, pool_size], 5,
+    x5 = PyramidROIAlign_AFN([pool_size, pool_size], 5,
                           name="roi_align_classifier_5")([rois, image_meta] + feature_maps)
 
     # Two 1024 FC layers (implemented with Conv2D for consistency)
